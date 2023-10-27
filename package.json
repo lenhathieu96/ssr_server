@@ -1,0 +1,29 @@
+{
+  "name": "ss_restaurant_server",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "author": "HieuLe",
+  "license": "MIT",
+  "private": true,
+  "repository": "https://github.com/lenhathieu96/ssr_server",
+  "dependencies": {
+    "@apollo/server": "^4.9.5",
+    "graphql": "^16.8.1"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^18.1.0",
+    "commitlint": "^18.2.0",
+    "eslint": "^8.52.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "lefthook": "^1.5.2",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "packageManager": "yarn@4.0.0"
+}
