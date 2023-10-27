@@ -3,7 +3,7 @@ pre-commit:
   commands:
     lint:
       files: git diff --name-only @{push}
-      glob: "*.{js,ts}"
+      glob: "*.{js, ts}"
       run: npx eslint {files}
     types:
       files: git diff --name-only @{push}
