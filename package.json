@@ -4,21 +4,27 @@
   "main": "index.ts",
   "author": "HieuLe",
   "license": "MIT",
-  "private": true,
   "repository": "https://github.com/lenhathieu96/ssr_server",
+  "private": true,
+  "type": "module",
   "dependencies": {
     "@apollo/server": "^4.9.5",
-    "@typescript-eslint/eslint-plugin": "^6.9.0",
-    "@typescript-eslint/parser": "^6.9.0",
-    "eslint-plugin-import": "^2.29.0",
     "graphql": "^16.8.1"
+  },
+  "scripts": {
+    "start": "tsx watch src",
+    "run": "node src/index.ts"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^18.1.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
     "commitlint": "^18.2.0",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "lefthook": "^1.5.2",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"

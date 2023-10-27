@@ -1,16 +1,20 @@
 {
     "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "./tsconfig.json",
+      "tsconfigRootDir": "./"
+    },
     "plugins": [
-      "@typescript-eslint",
       "import",
+      "prettier",
       "simple-import-sort",
-      "prettier"
+      "@typescript-eslint"
     ],
     "extends": [
-      "plugin:prettier/recommended",
       "eslint:recommended",
-      "plugin:import/typescript",
+      "plugin:prettier/recommended",
       "plugin:@typescript-eslint/recommended",
+      "plugin:import/typescript"
     ],
     "overrides": [
       {
@@ -44,7 +48,7 @@
             "error",
             {
               "unusedExports": true,
-              "missingImport": true,
+              "missingImport": true
             }
           ],
           "import/no-duplicates": ["error", { "considerQueryString": true }],
@@ -61,6 +65,33 @@
           "no-shadow": "off",
           "consistent-this": "off",
           "no-param-reassign": "error",
+
+
+ "simple-import-sort/imports": [
+          "error",
+          {
+            "groups": [
+              ["^@?\\w"],
+              [
+                "^(@app)(/.*|$)",
+                "^(@resolver)",
+                "^(@type-defs)",
+
+                "^(@utils)(/.*|$)",
+                "^(@configuration)(/.*|$)",
+                "^(@constants)(/.*|$)",
+                "^(@services)(/.*|$)",
+                "^(@hooks)(/.*|$)",
+                "^(@models)"
+              ],
+              // Parent imports. Put `..` last.
+              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+              // Other relative imports. Put same-folder imports and `.` last.
+              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"]
+            ]
+          }
+        ],
+
           "prettier/prettier": "error"
         }
       }
@@ -68,9 +99,6 @@
     "settings": {
       "import/parsers": {
         "@typescript-eslint/parser": [".ts"]
-      },
-      "import/resolver": {
-        "typescript": {}
       }
     }
   }

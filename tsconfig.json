@@ -1,32 +1,41 @@
 {
     "compilerOptions": {
-      "allowJs": true,
-      "allowSyntheticDefaultImports": true,
+      "target": "ESNext",
+      "module": "ESNext",
+      "moduleResolution": "Node",
       "esModuleInterop": true,
       "isolatedModules": true,
+      "resolveJsonModule": true,
+      "declaration": true,
+      "emitDecoratorMetadata": true,
+
+      "lib": ["ESNext"],
+      "sourceMap": true,
+      "allowJs": false,
+      "noEmit": true,
+      "strict": true,
+      "skipLibCheck": true,
+      "allowSyntheticDefaultImports": true,
+      "forceConsistentCasingInFileNames": true,
+      
       "noImplicitAny": false,
       "noImplicitReturns": true,
       "noImplicitThis": true,
-      "experimentalDecorators": true,
       "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "experimentalDecorators": true,
       "useDefineForClassFields": true,
-      "sourceMap": true,
-      "skipLibCheck": true,
-      "module": "esnext",
-      "jsx": "react-native",
-      "lib": ["esnext", "dom"],
-      "moduleResolution": "node",
-      "resolveJsonModule": true,
-      "noEmit": true,
-      "strict": true,
-      "target": "esnext",
+
       "baseUrl": ".",
       "paths": {
-        "@app": ["./src"],
-        "@app/*": ["./src/*"]
-      }
+        "@resolver" : ["./src/resolver"],
+        "@type-defs": ["./src/type-defs"],
+        "@root/*": ["./src/*"],
+      },
+      "outDir": "./dist",
+     
     },
-    "exclude": ["node_modules"],
-    "include": ["src"]
+    "exclude": ["node_modules", "dist"],
+    "include": ["./src/**/*"]
   }
   
