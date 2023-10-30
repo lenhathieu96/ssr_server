@@ -25,17 +25,16 @@
       "noUnusedParameters": true,
       "experimentalDecorators": true,
       "useDefineForClassFields": true,
+      "verbatimModuleSyntax": false,
 
       "baseUrl": ".",
       "paths": {
-        "@resolver" : ["./src/resolver"],
-        "@type-defs": ["./src/type-defs"],
+        "@graphql-schema" : ["src/graphql"],
+        "@utils/*": ["src/utils/*"],
         "@root/*": ["./src/*"],
-      },
-      "outDir": "./dist",
-     
+      }     
     },
-    "exclude": ["node_modules", "dist"],
+    "exclude": ["node_modules"],
     "include": ["./src/**/*"]
   }
   
