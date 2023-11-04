@@ -1,47 +1,52 @@
 import { ApolloServer } from '@apollo/server';
-import { expressMiddleware } from '@apollo/server/express4';
-import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
-import TrackAPI from '@root/TrackApi';
-import bodyParser from 'body-parser';
-import cors from 'cors';
+import { startStandaloneServer } from '@apollo/server/standalone';
 import dotenv from 'dotenv';
-import express from 'express';
-import http from 'http';
+import { MongoClient } from 'mongodb';
 
 import rootSchema from '@graphql-schema';
 
-const { parsed } = dotenv.config({
-  path: `environment/.env.${process.env.NODE_ENV}`,
-});
-const app = express();
-const httpServer = http.createServer(app);
-const port = parsed?.PORT ?? 8080;
+const env = process.env.NODE_ENV;
+const envPath = `environment/${env}`;
 
-const server = new ApolloServer({
-  schema: rootSchema,
-  nodeEnv: process.env.NODE_ENV,
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-});
+async function startServer() {
+  try {
+    const { parsed } = dotenv.config({
+      path: `${envPath}/.env.${env}`,
+    });
 
-await server.start();
-app.use(
-  '/',
-  cors<cors.CorsRequest>(),
-  // 50mb is the limit that `startStandaloneServer` uses, but you may configure this to suit your needs
-  bodyParser.json({ limit: '50mb' }),
-  expressMiddleware(server, {
-    context: async () => {
-      const { cache } = server;
-      return {
-        dataSources: {
-          trackAPI: new TrackAPI({ cache }),
-        },
-      };
-    },
-  })
-);
+    const port = parseInt(parsed?.PORT || '8080', 10);
+    const databaseUri = parsed?.MONGODB_URI;
+    const credentials = `${envPath}/mongodb_cert.pem`;
 
-await new Promise<void>((resolve) =>
-  httpServer.listen({ port: port }, resolve)
-);
-console.log(`🚀 Server ready at http://localhost:${port}/`);
+    if (!databaseUri) {
+      throw new Error('Invalid database uri');
+    }
+
+    const client = new MongoClient(databaseUri, {
+      ssl: true,
+      tlsCertificateKeyFile: credentials,
+      authMechanism: 'MONGODB-X509',
+      authSource: '$external',
+    });
+
+    const server = new ApolloServer({
+      schema: rootSchema,
+      nodeEnv: process.env.NODE_ENV,
+    });
+
+    const { url } = await startStandaloneServer(server, {
+      listen: { port: port },
+      context: async () => {
+        return {
+          db: client.db('SS_Restaurant'),
+        };
+      },
+    });
+
+    console.log(`🚀 Server ready at ${url}`);
+  } catch (e) {
+    console.log('❌ Cannot start sever \n', e);
+  }
+}
+
+startServer();

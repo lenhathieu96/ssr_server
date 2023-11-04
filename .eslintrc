@@ -1,110 +1,3 @@
-// {
-//   "parser": "@typescript-eslint/parser",
-//   "parserOptions": {
-//     "project": "./tsconfig.json",
-//     "tsconfigRootDir": "./"
-//   },
-//   "plugins": [
-//     "import",
-//     "prettier",
-//     "simple-import-sort",
-//     "@typescript-eslint",
-//     "@graphql-eslint"
-//   ],
-//   "extends": [
-//     "eslint:recommended",
-//     "plugin:@typescript-eslint/recommended",
-//     "plugin:import/typescript"
-//   ],
-//   "rules": {
-//     "@typescript-eslint/no-var-requires": "off",
-//     "@typescript-eslint/no-shadow": ["error"],
-//     "@typescript-eslint/no-empty-interface": "error",
-//     "@typescript-eslint/no-empty-function": ["error"],
-//     "@typescript-eslint/ban-ts-comment": "off",
-//     "@typescript-eslint/no-unused-vars": [
-//       "error",
-//       {
-//         "argsIgnorePattern": "^_",
-//         "varsIgnorePattern": "^_",
-//         "caughtErrorsIgnorePattern": "^_"
-//       }
-//     ],
-//     "@typescript-eslint/no-namespace": [
-//       "error",
-//       { "allowDeclarations": true }
-//     ],
-//     "@typescript-eslint/no-this-alias": "off",
-//     "no-bitwise": ["warn", { "allow": ["~", ">>", "&"] }],
-//     "no-dupe-keys": "error",
-//     "no-duplicate-case": "error",
-//     "import/no-unused-modules": [
-//       "error",
-//       {
-//         "unusedExports": true,
-//         "missingImport": true
-//       }
-//     ],
-//     "import/no-duplicates": ["error", { "considerQueryString": true }],
-//     "import/no-cycle": ["error"],
-//     "import/named": ["error"],
-//     "no-restricted-properties": [
-//       "error",
-//       {
-//         "property": "__defineGetter__"
-//       }
-//     ],
-//     "no-undef": "off",
-//     "no-shadow": "off",
-//     "consistent-this": "off",
-//     "no-param-reassign": "error",
-//     "simple-import-sort/imports": [
-//       "error",
-//       {
-//         "groups": [
-//           ["^@?\\w"],
-//           [
-//             "^(@app)(/.*|$)",
-//             "^(@resolver)",
-//             "^(@type-defs)",
-//             "^(@utils)(/.*|$)",
-//             "^(@configuration)(/.*|$)",
-//             "^(@constants)(/.*|$)",
-//             "^(@services)(/.*|$)",
-//             "^(@hooks)(/.*|$)",
-//             "^(@models)"
-//           ],
-//           ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
-//           ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"]
-//         ]
-//       }
-//     ]
-//   },
-//   "overrides": [
-//     {
-//       "files": ["*.ts", "*.js"],
-//       "extends": [
-//         "plugin:prettier/recommended"
-//       ]
-//     },
-//     {
-//       "files": ["*.graphql"],
-//       "extends": [
-//         "plugin:@graphql-eslint/recommended"
-//       ],
-//       "rules": {
-//         "@graphql-eslint/known-type-names": "error"
-//       }
-//     }
-//   ],
-//   "settings": {
-//     "import/parsers": {
-//       "@typescript-eslint/parser": [".ts"]
-//     }
-//   }
-// }
-
-
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -129,7 +22,38 @@
       "processor": "@graphql-eslint/graphql",
       "rules": {
         // TypeScript and JavaScript rules
-      
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-shadow": ["error"],
+        "@typescript-eslint/no-empty-interface": "error",
+        "@typescript-eslint/no-empty-function": ["error"],
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "argsIgnorePattern": "^_",
+            "varsIgnorePattern": "^_",
+            "caughtErrorsIgnorePattern": "^_"
+          }
+        ],
+        "@typescript-eslint/no-namespace": "warn",
+        "@typescript-eslint/no-this-alias": "off",
+        "no-bitwise": ["warn", { "allow": ["~", ">>", "&"] }],
+        "no-dupe-keys": "error",
+        "no-duplicate-case": "error",
+        
+        "import/no-duplicates": ["error", { "considerQueryString": true }],
+        "import/no-cycle": ["error"],
+        "import/named": ["error"],
+        "no-restricted-properties": [
+          "error",
+          {
+            "property": "__defineGetter__"
+          }
+        ],
+        "no-undef": "off",
+        "no-shadow": "off",
+        "consistent-this": "off",
+        "no-param-reassign": "error",
         "simple-import-sort/imports": [
           "error",
           {
@@ -158,14 +82,7 @@
       "files": ["*.graphql"],
       "parser": "@graphql-eslint/eslint-plugin",
       "plugins": ["@graphql-eslint"],
-      "rules": {
-        // "@graphql-eslint/known-type-names": "error"
-      }
+      "rules": {}
     }
-  ],
-  "settings": {
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts"]
-    }
-  }
+  ]
 }
