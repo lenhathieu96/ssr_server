@@ -1,23 +1,24 @@
-import { ApolloServer } from '@apollo/server';
-import { startStandaloneServer } from '@apollo/server/standalone';
+import Middleware from '@middleware';
+import Router from '@router';
+import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import express from 'express';
 import { MongoClient } from 'mongodb';
 
-import rootSchema from '@graphql-schema';
+import { ROUTE_PATH } from '@utils/constants';
 
-const env = process.env.NODE_ENV;
-const envPath = `environment/${env}`;
+const ENV = process.env.NODE_ENV;
+const ENV_PATH = `environment/${ENV}`;
+
+const { parsed } = dotenv.config({
+  path: `${ENV_PATH}/.env.${ENV}`,
+});
+const port = parseInt(parsed?.PORT ?? '8080', 10);
+const databaseUri = parsed?.MONGODB_URI;
+const credentials = `${ENV_PATH}/mongodb_cert.pem`;
 
 async function startServer() {
   try {
-    const { parsed } = dotenv.config({
-      path: `${envPath}/.env.${env}`,
-    });
-
-    const port = parseInt(parsed?.PORT || '8080', 10);
-    const databaseUri = parsed?.MONGODB_URI;
-    const credentials = `${envPath}/mongodb_cert.pem`;
-
     if (!databaseUri) {
       throw new Error('Invalid database uri');
     }
@@ -29,21 +30,30 @@ async function startServer() {
       authSource: '$external',
     });
 
-    const server = new ApolloServer({
-      schema: rootSchema,
-      nodeEnv: process.env.NODE_ENV,
+    const app = express();
+    //prevent brute force
+    app.use(Middleware.rateLimiter);
+
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+
+    const mainRouteList = Object.keys(
+      ROUTE_PATH
+    ) as (keyof typeof ROUTE_PATH)[];
+    mainRouteList.forEach((route) => {
+      if (route === 'authentication') app.use(ROUTE_PATH[route], Router[route]);
+      else app.use(ROUTE_PATH[route], Middleware.authentication, Router[route]);
+    });
+    client.connect();
+
+    app.use((err, _, res, __) => {
+      console.error(err.stack);
+      res.status(500).send('Server is not available, Please try again later!');
     });
 
-    const { url } = await startStandaloneServer(server, {
-      listen: { port: port },
-      context: async () => {
-        return {
-          db: client.db('SS_Restaurant'),
-        };
-      },
+    app.listen(port, () => {
+      console.log(`🚀 Server ready at port: ${port}`);
     });
-
-    console.log(`🚀 Server ready at ${url}`);
   } catch (e) {
     console.log('❌ Cannot start sever \n', e);
   }

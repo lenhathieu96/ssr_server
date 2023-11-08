@@ -1,8 +1,0 @@
-type Query {
-  getAllFood: [Food]
-}
-
-type Food {
-  id: ID!
-  name: String!
-}

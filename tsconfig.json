@@ -29,9 +29,10 @@
 
       "baseUrl": ".",
       "paths": {
-        "@graphql-schema" : ["src/graphql"],
         "@utils/*": ["src/utils/*"],
-        "@root/*": ["./src/*"],
+        "@router": ["./src/router"],
+        "@middleware": ["./src/middleware"],
+        "@root/*": ["./src/*"]
       }     
     },
     "exclude": ["node_modules"],

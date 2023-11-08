@@ -19,7 +19,6 @@
   "overrides": [
     {
       "files": ["*.ts", "*.js"],
-      "processor": "@graphql-eslint/graphql",
       "rules": {
         // TypeScript and JavaScript rules
         "@typescript-eslint/no-var-requires": "off",
@@ -77,12 +76,6 @@
         ]
       
       }
-    },
-    {
-      "files": ["*.graphql"],
-      "parser": "@graphql-eslint/eslint-plugin",
-      "plugins": ["@graphql-eslint"],
-      "rules": {}
     }
   ]
 }
